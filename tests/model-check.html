@@ -1,0 +1,35 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Range model check</title>
+<pre id="out"></pre>
+<script src="../js/data.js"></script>
+<script src="../js/model.js"></script>
+<script>
+const R = window.RADIO, m = R.model;
+const f = (x) => x < 1 ? Math.round(x * 1000) + " m" : x.toFixed(1) + " km";
+const cases = [
+  ["VHF vehicle, open", { radio: "vhfMobile", position: "roof", terrain: "open" }],
+  ["VHF handheld window, open", { radio: "vhfHand", position: "window", terrain: "open" }],
+  ["VHF handheld cab, open", { radio: "vhfHand", position: "cab", terrain: "open" }],
+  ["PMR window, open", { radio: "pmr", position: "window", terrain: "open" }],
+  ["PMR cab, open", { radio: "pmr", position: "cab", terrain: "open" }],
+  ["PMR window, ridge 25 m", { radio: "pmr", position: "window", terrain: "hill", hill: 25 }],
+  ["VHF vehicle, ridge 80 m", { radio: "vhfMobile", position: "roof", terrain: "hill", hill: 80 }],
+  ["VHF vehicle, bush", { radio: "vhfMobile", position: "roof", terrain: "bush" }],
+  ["PMR window, bush", { radio: "pmr", position: "window", terrain: "bush" }],
+  ["PMR, lodge (ordinary)", { radio: "pmr", position: "window", terrain: "building", building: "traditional" }],
+  ["PMR, lodge (insulated)", { radio: "pmr", position: "window", terrain: "building", building: "efficient" }],
+  ["VHF vehicle, lodge (ordinary)", { radio: "vhfMobile", position: "roof", terrain: "building", building: "traditional" }]
+];
+let s = "";
+for (const [n, o] of cases) {
+  s += n.padEnd(32) + ["VHF", "UHF"].map((b) => { const r = m.reach({ ...o, band: b }); return b + ": clear " + f(r.clear) + ", usable " + f(r.usable); }).join("  |  ") + "\n";
+}
+s += "\nBEL ordinary VHF/UHF " + m.buildingEntry(160, "traditional").toFixed(1) + " / " + m.buildingEntry(446.1, "traditional").toFixed(1);
+s += "\nBEL insulated VHF/UHF " + m.buildingEntry(160, "efficient").toFixed(1) + " / " + m.buildingEntry(446.1, "efficient").toFixed(1);
+s += "\nTrees max per end VHF/UHF " + m.vegetation(160, 10).am.toFixed(1) + " / " + m.vegetation(446.1, 10).am.toFixed(1);
+s += "\nHorizon roof/roof " + m.horizon(2.1, 2.1).toFixed(1) + " km, window/window " + m.horizon(1.6, 1.6).toFixed(1) + " km";
+for (const a of [R.DEFAULT_ANSWERS, { for: "convoy", group: "own", admin: "none", where: "bwna" }, { for: "short", admin: "form", where: "bwna" }, { for: "long", admin: "none", where: "sa" }])
+  s += "\npick " + JSON.stringify(a) + " -> " + JSON.stringify(R.pick(a));
+document.getElementById("out").textContent = s;
+</script>

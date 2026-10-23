@@ -1,0 +1,12 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Antenna check</title>
+<pre id="out"></pre>
+<script src="../js/antenna.js"></script>
+<script>
+const A = window.RADIO.antenna;
+let s = "Horizon: quarter " + A.quarter.dBi(0).toFixed(2) + " dBi, 5/8 " + A.fiveEighths.dBi(0).toFixed(2) + " dBi, difference " + A.difference(0).toFixed(2) + " dB\n";
+s += "Crossover " + A.crossover().toFixed(1) + " deg, 5/8 null at " + A.nullElevation().toFixed(1) + " deg\n";
+for (const a of [0, 2, 5, 10, 15, 20, 25, 30, 35, 37, 40, 50, 60, 70]) s += a + " deg: quarter " + A.quarter.dBi(a).toFixed(1) + ", 5/8 " + A.fiveEighths.dBi(a).toFixed(1) + ", diff " + A.difference(a).toFixed(1) + "\n";
+document.getElementById("out").textContent = s;
+</script>
