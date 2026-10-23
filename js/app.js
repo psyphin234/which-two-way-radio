@@ -72,6 +72,7 @@
       if (!e.target.name) return;
       answers[e.target.name] = e.target.value;
       updateChooser();
+      saveAnswers();
     });
   }
 
@@ -79,9 +80,15 @@
     const a = C.answer(answers);
     $("#answer").innerHTML = `<span class="answer-band">${a.band === "VHF" ? "Club VHF" : "Licence-free UHF"}</span> ${esc(a.text)}`;
     document.querySelectorAll(".band").forEach((b) => b.classList.toggle("band--pick", b.dataset.band === a.band));
+  }
+
+  // put the visitor's picks in the address so it can be shared; defaults are left out
+  function saveAnswers() {
     try {
-      const p = new URLSearchParams(answers);
-      history.replaceState(null, "", "?" + p.toString() + location.hash);
+      const p = new URLSearchParams();
+      C.questions.forEach((q) => { if (answers[q.id] !== C.defaults[q.id]) p.set(q.id, answers[q.id]); });
+      const qs = p.toString();
+      history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
     } catch (e) { /* file:// */ }
   }
 
