@@ -41,6 +41,11 @@
       by: "ICASA", kind: "regulator",
       url: "https://www.icasa.org.za/uploads/files/RF-Type-Approved-Equipment-2018.pdf"
     },
+    eccPmr446: {
+      title: "ECC Decision (15)05: PMR 446 in 446.0-446.2 MHz, licence-exempt (CEPT, amended 2 March 2018)",
+      by: "CEPT ECC", kind: "regulator",
+      url: "https://docdb.cept.org/document/448"
+    },
     bocraSrd: {
       title: "Guidelines on the Use of Short-Range Devices (SRDs) in Botswana, February 2022",
       by: "BOCRA", kind: "regulator",
@@ -223,7 +228,7 @@
       if (a.who === "near") {
         return a.kind === "handheld"
           ? { band: "UHF", text: "Licence-free UHF handhelds. No paperwork; short range is all you need." }
-          : { band: "UHF", text: "Licence-free UHF handhelds. A licence-free radio can't be given an external high-gain antenna, so it isn't fitted with a roof antenna; at short range a handheld does the job." };
+          : { band: "UHF", text: "Licence-free UHF handhelds. At short range a handheld does the job. Some models take a small unity-gain (no gain) magnetic-mount antenna to get the signal out of the vehicle; an antenna with gain isn't allowed." };
       }
       const club = a.who === "club"
         ? "Ask the club which radio the convoy uses (usually VHF): every vehicle has to be on the same system. "
@@ -245,12 +250,12 @@
         ["What", "Handhelds on the licence-free UHF channels: PMR446 (446.0-446.2 MHz) and South Africa's own five channels at about 464 MHz. Radios sold as licence-free often cover both (13 channels)."],
         ["Licence", "None. The radio must be ICASA type-approved and stay exactly as approved."],
         ["Power", "0.5 W e.r.p. (radiated power), set by law."],
-        ["Antenna", "Its own. ICASA: the frequencies, power and \"external high-gain antenna\" must not be altered without a new type approval. And because the 0.5 W limit is radiated power, an antenna with gain would push it over."],
-        ["Range", "Short: a few km in the open with the radio held out of the window, much less from inside the vehicle (see the range figures below)."],
+        ["Antenna", "Its own, or for some models a small magnetic-mount antenna sold as an accessory. ICASA: the frequencies, power and \"external high-gain antenna\" must not be altered without a new type approval. A unity-gain (no gain) antenna doesn't add power: it gets the signal out of the vehicle's metal body, so the same 0.5 W reaches further. An antenna with gain raises the radiated power past the 0.5 W e.r.p. limit, and that isn't allowed."],
+        ["Range", "Short: a few km in the open with the radio held out of the window or on an antenna outside, much less from inside the vehicle (see the range figures below)."],
         ["Cost", "No licence fee."],
-        ["Watch out", "Channels are shared and get no protection from interference. The 464 MHz channels are licence-free in South Africa only."]
+        ["Watch out", "Channels are shared and get no protection from interference. PMR446 is also licence-free in Europe and in some neighbouring countries, such as Botswana. The 464 MHz channels are licence-free in South Africa only."]
       ],
-      sources: ["annexB2023", "vratvark", "bocraSrd", "physics"]
+      sources: ["annexB2023", "vratvark", "eccPmr446", "bocraSrd", "physics"]
     },
     VHF: {
       title: "VHF",
@@ -391,13 +396,13 @@
   /* ---------------------------------------------------------- 7. illegal radios */
   const ILLEGAL = [
     { title: "Radios you can set to any frequency",
-      text: "ICASA banned the sale and use of the Baofeng UV-5R in September 2022 because it tunes continuously: any frequency can be typed in, including ones the user isn't licensed for. Owning a receiver that tunes continuously above 30 MHz is restricted too.",
+      text: "ICASA banned the sale and use of the Baofeng UV-5R for commercial use in September 2022 because it tunes continuously: any frequency can be typed in, including ones the user isn't licensed for. Owning a receiver that tunes continuously above 30 MHz is restricted too.",
       sources: ["baofeng2022", "rfsr2015"] },
     { title: "Radios without ICASA type approval",
-      text: "Every radio used in South Africa must be type-approved, licence-free ones included. Owning radio apparatus without a licence, an exemption or type approval can carry 6 to 24 months in jail and/or a fine of R250,000 to R5 million (regulations 38(1) and 42(6)).",
+      text: "Every commercial radio used in South Africa must be type-approved, and so must licence-free ones. Owning radio apparatus without a licence, an exemption or type approval can carry 6 to 24 months in jail and/or a fine of R250,000 to R5 million (regulations 38(1) and 42(6)).",
       sources: ["rfsr2015", "annexB2023"] },
     { title: "Licence-free radios pushed past the rules",
-      text: "More than 0.5 W radiated, an external high-gain antenna (a magnetic roof antenna, for example), or changed frequencies or power. ICASA says these must not be altered without a new type approval. A radio that can do 5 W on UHF is only licence-free when it runs at 0.5 W on the licence-free channels; anything more needs a licence.",
+      text: "More than 0.5 W radiated, changed frequencies or power, or an external UHF antenna with gain. ICASA says these must not be altered without a new type approval. The small magnetic-mount antennas sold as an accessory for some models should be unity gain (no gain): they get the signal out of the vehicle without adding power. The moment the radio is connected to an antenna with gain, its radiated power goes past the 0.5 W limit and it's no longer legal. A radio that can do 5 W on UHF is only licence-free when it runs at 0.5 W on the licence-free channels; anything more needs a licence.",
       sources: ["annexB2023", "vratvark"] },
     { title: "Any radio on channels you aren't licensed for",
       text: "Using club VHF channels without an authorisation is transmitting without a licence. A licensed user may only use the frequencies they were given.",
@@ -410,9 +415,9 @@
       "ICASA checks a radio model against the technical standards ICASA regulates for that kind of equipment, and gives it a type approval number, such as TA-2018/870.",
       "Look for the ICASA label with the approval number, like the one in this Vratvark 2.0 (inside the battery compartment).",
       "The aim is that only type-approved equipment is sold, leased or used in South Africa.",
-      "It applies to the model as approved. Changing a licence-free radio's frequencies, power or antenna needs a new type approval.",
+      "It applies to the model as approved. Changing a licence-free radio's frequencies or power, or giving it an external high-gain antenna, needs a new type approval.",
       "Type approval isn't a licence. It means the radio may be used; you still need a licence unless it's a licence-free radio used as approved.",
-      "ICASA can suspend an approval: the Baofeng UV-5R was approved in 2018 (TA-2018/870, 4 W, VHF and UHF) and banned in 2022."
+      "ICASA can suspend an approval: the Baofeng UV-5R was approved in 2018 (TA-2018/870, 4 W, VHF and UHF) and banned in 2022 for commercial use."
     ],
     sources: ["taGuidelines", "ta2018", "annexB2023", "baofeng2022", "photos"]
   };
@@ -427,7 +432,7 @@
         text: "Baofeng lists it as transmitting on 136-174, 220-260 and 400-520 MHz at 10 W, programmable from the keypad. A licensed user may only use the frequencies they were given, programmed by an accredited dealer, and owning a radio that tunes continuously above 30 MHz is restricted except on the amateur bands. A club VHF licence doesn't make it legal: it's equipment for licensed radio amateurs.",
         sources: ["baofengUV32", "baofeng2022", "rfsr2015"] },
       { n: 2, x: 0.49, name: "Baofeng UV-16", verdict: "Not legally covered under a VHF ORRA licence. Amateur licence only.", tone: "fail",
-        text: "A dual-band keypad radio (136-174 and 400-520 MHz in listings) with a frequency mode, in the same style as the UV-5R that ICASA banned in 2022. The same rules apply: a club licence doesn't cover a radio you can tune to any frequency, and owning one that tunes continuously above 30 MHz is restricted except on the amateur bands. We found no ICASA type approval for it.",
+        text: "A dual-band keypad radio (136-174 and 400-520 MHz in listings) with a frequency mode, in the same style as the UV-5R that ICASA banned for commercial use in 2022. The same rules apply: a club licence doesn't cover a radio you can tune to any frequency, and owning one that tunes continuously above 30 MHz is restricted except on the amateur bands. We found no ICASA type approval for it.",
         sources: ["uv16", "baofeng2022", "rfsr2015"] },
       { n: 3, x: 0.67, name: "Vratvark 2.0 (RTS DV-3140UV)", verdict: "Legal with a club VHF licence", tone: "pass",
         text: "A VHF and UHF FM radio with ICASA type approval TA-2014/1255 (the label is shown below). It has no keypad for typing in frequencies: an accredited dealer programs its channels. With a club VHF licence and your issuer's channels programmed in, it's legal to use.",

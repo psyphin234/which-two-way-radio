@@ -263,9 +263,9 @@
       <div class="reach-row"><span class="reach-label">${esc(o.insideName)}</span>${bar(kIn, "reach-bar--in")}<span class="reach-km">about ${fmtKm(kIn)}</span></div>
       <div class="reach-row"><span class="reach-label">${esc(o.outsideName)}</span>${bar(kOut, "reach-bar--out")}<span class="reach-km">about ${fmtKm(kOut)}</span></div>`;
     const note = outBand === "VHF"
-      ? `Clear speech on open, flat ground, from the range model. Most of the difference is the metal body and the antenna's height, not the watts: the same 5 W handheld held out of the window reaches about ${fmtKm(clearKm("vhfHand", "window"))}. The fitted radio's figure matches ORRA's 15-30 km.`
-      : `Clear speech on open, flat ground, from the range model. A licence-free radio keeps its own antenna and 0.5 W, so out of the window is as far as it legally goes.`;
-    $("#outside-note").innerHTML = esc(note) + refs(["physics", "p526", "orraVhf", "annexB2023", "ta2018"]);
+      ? `Clear speech on open, flat ground, from the range model. Most of the difference is the metal body and the antenna's height, not the watts: the same 5 W handheld held out of the window can reach many kilometres, depending on the terrain and surroundings. The fitted radio's figure matches ORRA's 15-30 km.`
+      : `Clear speech on open, flat ground, from the range model. A licence-free radio stays at 0.5 W. Held out of the window, or on a small unity-gain (no gain) antenna outside the vehicle, its signal gets out of the metal body and reaches further; an antenna with gain isn't allowed.`;
+    $("#outside-note").innerHTML = esc(note) + refs(["physics", "p526", "orraVhf", "annexB2023", "ta2018", "vratvark"]);
   }
 
   /* ---------------------------------------------------------- 4. antennas */
@@ -274,7 +274,7 @@
   const BX = 300, BG = 340, BR = 300;
   const gMax = AN.fiveEighths.gain(0);
   const LO = AN.crossover(), HI = AN.crossoverHigh();   // about 18° and 60°
-  // drawn to scale in power (linear gain): 3 dB = twice as long
+  // drawn to scale in received signal (linear gain): 3 dB = twice as long
   const bRadius = (ant, deg) => BR * Math.max(0, ant.gain(deg)) / gMax;
 
   /* The two antennas side by side, drawn to one scale (0.2 px per mm) from
@@ -402,7 +402,7 @@
       ? `<path d="M${ox + 150} ${BG} L${(sx - 95).toFixed(1)} ${gy2.toFixed(1)} L900 ${gy2.toFixed(1)} L900 ${BG} Z" class="mountain"/>`
       : "";
     const times = (r) => (r >= 10 ? Math.round(r) : r.toFixed(1)) + "×";
-    const ratio = gq > gf ? `ZARA60: ${times(gq / gf)} the power` : `ZARA130: ${times(gf / gq)} the power`;
+    const ratio = gq > gf ? `ZARA60: ${times(gq / gf)} the signal` : `ZARA130: ${times(gf / gq)} the signal`;
     // the sky shaded by which antenna is stronger at each angle (right-hand side)
     const polar = (deg, r) => [ox + r * Math.cos((deg * Math.PI) / 180), oy - r * Math.sin((deg * Math.PI) / 180)].map((v) => v.toFixed(1));
     const sector = (a1, a2, cls) => `<path d="M${ox} ${oy} L${polar(a1, 900).join(" ")} A900 900 0 0 0 ${polar(a2, 900).join(" ")} Z" class="${cls}"/>`;
@@ -411,7 +411,7 @@
       return `<line x1="${ox}" y1="${oy}" x2="${x2}" y2="${y2}" class="sector-edge"/><text x="${tx}" y="${ty}" dx="8" class="sector-deg">${Math.round(deg)}°</text>`;
     };
     $("#bubble").innerHTML = `
-      <desc id="bubble-desc">${esc(sc.where)} Gain pattern, drawn to scale in power. Both antennas get the same power from the radio. The quarter-wave's pattern is rounder; the 5/8's is flatter and twice as long toward the horizon. The ZARA130 is stronger from the horizon to ${Math.round(LO)}° up, the ZARA60 from ${Math.round(LO)}° to ${Math.round(HI)}° up. Toward the other vehicle: ${ratio}.</desc>
+      <desc id="bubble-desc">${esc(sc.where)} Gain pattern, drawn to scale in received signal. Both antennas get the same power from the radio. The quarter-wave's pattern is rounder; the 5/8's is flatter and twice as long toward the horizon. The ZARA130 is stronger from the horizon to ${Math.round(LO)}° up, the ZARA60 from ${Math.round(LO)}° to ${Math.round(HI)}° up. Toward the other vehicle: ${ratio}.</desc>
       <defs><linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071033"/><stop offset="1" stop-color="#0c1a45"/></linearGradient></defs>
       <rect width="900" height="400" fill="url(#bsky)"/>
       ${sector(0, LO, "sector sector--f")}
@@ -439,15 +439,16 @@
       <p class="meters-head"><strong>${esc(sc.label)}:</strong> ${esc(sc.where)} <strong>${winner}</strong>${Math.abs(diff) > 0.5 ? `: ${ratio.split(": ")[1]} (${Math.abs(diff).toFixed(1)} dB)` : ""}.</p>
       <div class="reach-row"><span class="reach-label">ZARA60 (quarter-wave)</span><span class="reach-bar reach-bar--q" style="width:${bar(gq).toFixed(1)}%"></span></div>
       <div class="reach-row"><span class="reach-label">ZARA130 (5/8-wave)</span><span class="reach-bar reach-bar--f" style="width:${bar(gf).toFixed(1)}%"></span></div>
-      <p class="small">Power sent toward the other vehicle, same radio, ideal patterns, drawn to scale in power: 3 dB is twice the power, so on the horizon the ZARA130's bubble is twice as long, matching Webb's "3 dB relative to a quarter-wave".</p>`;
+      <p class="small">Signal received by the other vehicle, same radio, ideal patterns, drawn to scale: 3 dB means it receives twice the signal (not twice the distance), so on the horizon the ZARA130's bubble is twice as long, matching Webb's "3 dB relative to a quarter-wave".</p>`;
   }
 
   /* ---------------------------------------------------------- 5 to 8 */
   function renderKinds() {
     const K = D.KINDS;
+    // handheld: no fixed figure, its reach depends too much on terrain and where it's held (reviewer, 2026-10-27)
     const numbers = {
-      handheld: `Club VHF handheld out of the window: clear to about ${fmtKm(clearKm("vhfHand", "window"))}; inside the cab: about ${fmtKm(clearKm("vhfHand", "cab"))}. Licence-free UHF out of the window: about ${fmtKm(clearKm("pmr", "window"))}.`,
-      mobile: `Club VHF fitted with a roof antenna: clear to about ${fmtKm(clearKm("vhfMobile", "roof"))}.`
+      handheld: ["Range", "A club VHF handheld out of the window can reach many kilometres, depending on the terrain and surroundings; much less from inside the cab. A licence-free UHF handheld reaches less."],
+      mobile: ["Range model, open flat ground", `Club VHF fitted with a roof antenna: clear to about ${fmtKm(clearKm("vhfMobile", "roof"))}.`]
     };
     $("#kinds-list").innerHTML = ["handheld", "mobile"].map((k) => {
       const x = K[k];
@@ -455,7 +456,7 @@
         <h3>${esc(x.title)}</h3>
         <ul class="pros">${x.pros.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
         <ul class="cons">${x.cons.map((c) => `<li>${esc(c)}</li>`).join("")}</ul>
-        <p class="kind-numbers"><span class="muted">Range model, open flat ground:</span> ${esc(numbers[k])}</p>
+        <p class="kind-numbers"><span class="muted">${esc(numbers[k][0])}:</span> ${esc(numbers[k][1])}</p>
         ${refs(x.sources)}
       </article>`;
     }).join("");
