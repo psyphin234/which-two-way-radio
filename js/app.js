@@ -467,13 +467,16 @@
     $("#examples-intro").textContent = E.intro;
     $("#examples-photo").insertAdjacentHTML("beforeend", E.radios.map((r) =>
       `<span class="photo-badge photo-badge--${r.tone}" style="left:${(r.x * 100).toFixed(1)}%" aria-hidden="true">${r.n}</span>`).join(""));
-    $("#examples-list").innerHTML = E.radios.map((r) => `
+    // the photo's radios are numbered, the off-the-shelf ones (not in the photo) aren't
+    const card = (r) => `
       <article class="example example--${r.tone}">
-        <div class="example-head"><span class="example-no">${r.n}</span><h3>${esc(r.name)}</h3></div>
+        <div class="example-head">${r.n ? `<span class="example-no">${r.n}</span>` : ""}<h3>${esc(r.name)}</h3></div>
         <p class="example-verdict">${esc(r.verdict)}</p>
         <p>${esc(r.text)}</p>
         ${refs(r.sources)}
-      </article>`).join("");
+      </article>`;
+    $("#examples-list").innerHTML = E.radios.map(card).join("") +
+      `<h3 class="sub-label">${esc(E.shelf.title)}</h3>` + E.shelf.radios.map(card).join("");
   }
 
   function renderDigital() {

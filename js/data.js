@@ -47,9 +47,19 @@
       url: "https://docdb.cept.org/document/448"
     },
     ta2025: {
-      title: "List of Type Approved Equipment, 2025 (BF-888S: TA-2022/1494, TA-2023/1092, TA-2024/1336)",
+      title: "List of Type Approved Equipment, 2025 (BF-888S: TA-2022/1494, TA-2023/1092, TA-2024/1336. Zartek ZA-722 and TX-2 listed as two-way radios)",
       by: "ICASA", kind: "regulator",
       url: "https://www.icasa.org.za/uploads/files/List-of-Type-Approved-Equipment-2025.pdf"
+    },
+    zartek722: {
+      title: "ZA-722 (product page): \"Power Output 500mW License Free\", 16 pre-programmed channels",
+      by: "Zartek", kind: "maker",
+      url: "https://zartek.co.za/za-722/"
+    },
+    zartekTx2: {
+      title: "TX-2 (product page): \"Power Output 500mW License Free\", 16 pre-programmed channels",
+      by: "Zartek", kind: "maker",
+      url: "https://zartek.co.za/tx-2/"
     },
     bocraSrd: {
       title: "Guidelines on the Use of Short-Range Devices (SRDs) in Botswana, February 2022",
@@ -436,7 +446,7 @@
      The owner's photo (site/img/radios-800.jpg, from 3.jpeg: background cleaned up), left to right. Badge x
      positions are fractions of the photo's width. */
   const EXAMPLES = {
-    intro: "Four handhelds on one table, and what the law says about each for 4x4 use. A club VHF licence lets you use your issuer's channels on a type-approved radio that an accredited dealer has programmed. It doesn't make any radio legal.",
+    intro: "Four handhelds on one table, and what the law says about each for 4x4 use, then two radios sold licence-free and ready out of the box. A club VHF licence lets you use your issuer's channels on a type-approved radio that an accredited dealer has programmed. It doesn't make any radio legal.",
     radios: [
       { n: 1, x: 0.27, name: "Baofeng UV-32", verdict: "Not legally covered under a VHF ORRA licence. Amateur licence only.", tone: "fail",
         text: "Baofeng lists it as transmitting on 136-174, 220-260 and 400-520 MHz at 10 W, programmable from the keypad. A licensed user may only use the frequencies they were given, programmed by an accredited dealer, and owning a radio that tunes continuously above 30 MHz is restricted except on the amateur bands. A club VHF licence doesn't make it legal: it's equipment for licensed radio amateurs.",
@@ -450,7 +460,19 @@
       { n: 4, x: 0.89, name: "Baofeng 888S (V6)", verdict: "Type-approved. Legal licence-free when a dealer sets it to the licence-free channels on low power", tone: "pass",
         text: "A UHF-only radio (400-470 MHz, 16 channels). Club VHF is 146-174 MHz, so it can't talk to a VHF convoy, and a VHF licence doesn't cover it. It has a high and a low power setting, and the channels and power are set in the programming software, not by the user. So a dealer can set it up for licence-free use: the licence-free UHF channels at low power, within the 0.5 W e.r.p. limit. MyBroadband tested a BF-888S at about 2-3 W, so it has to be set to low power first. ICASA's 2025 type-approval list has the BF-888S under three approval numbers (TA-2022/1494, TA-2023/1092 and TA-2024/1336). The list doesn't say which frequencies or power each covers, so look for the ICASA label, or ask the dealer for the approval number. Baofeng sells a separate PMR446 model, the BF-88E (rated ≤0.5 W), for licence-free use in Europe.",
         sources: ["ta2025", "mybroadband", "baofeng88E", "annexB2023"] }
-    ]
+    ],
+    /* Off-the-shelf licence-free radios, not in the photo (Eric's suggestion, 2026-10-27) */
+    shelf: {
+      title: "Sold licence-free, ready out of the box",
+      radios: [
+        { name: "Zartek ZA-722 and TX-2", verdict: "Legal licence-free out of the box", tone: "pass",
+          text: "Zartek lists both as \"500mW License Free\" with 16 pre-programmed channels, and both are on ICASA's 2025 type-approval list as two-way radios. Use them as they come, with no licence and no programming. Like every licence-free radio, they must stay as approved: no changes to the frequencies or power, and no antenna with gain.",
+          sources: ["zartek722", "zartekTx2", "ta2025", "annexB2023"] },
+        { name: "Bosvark (RTS DV-3400)", verdict: "Legal licence-free out of the box", tone: "pass",
+          text: "Vratvark sells it as a licence-free PMR446 radio, pre-programmed to 0.5 W on all 13 licence-free channels (8 PMR446 plus South Africa's 5). Used as it comes, it needs no licence. It can also do 5 W, but only on your own ICASA-licensed channel, and at that power it isn't licence-free. Vratvark also lists a UHF magnetic-mount antenna. If you fit one, it should be unity gain (no gain). We didn't find its approval number on ICASA's 2018 or 2025 lists (older lists aren't online), so look for the ICASA label.",
+          sources: ["vratvark", "annexB2023", "ta2018", "ta2025"] }
+      ]
+    }
   };
 
   /* ---------------------------------------------------------- 9. analogue or digital */
