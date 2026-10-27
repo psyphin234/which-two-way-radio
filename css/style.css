@@ -551,7 +551,6 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .band .facts > div { grid-template-columns: 80px 1fr; }
 
 #outside-svg { display: block; width: 100%; height: auto; font-family: var(--font-body); margin-top: 12px; }
-#outside-band { margin-top: 4px; }
 #outside-svg .divider { stroke: rgba(76, 201, 255, 0.3); stroke-dasharray: 4 6; }
 #outside-svg .oground { fill: #13204a; stroke: rgba(76, 201, 255, 0.35); }
 #outside-svg .wave-ring { fill: none; stroke: #4cc9ff; stroke-width: 2.5; }

@@ -256,7 +256,7 @@
         ["Licence", "None. The radio must be ICASA type-approved and stay exactly as approved."],
         ["Power", "0.5 W e.r.p. (radiated power), set by law."],
         ["Antenna", "Its own, or for some models a small magnetic-mount antenna sold as an accessory. ICASA: the frequencies, power and \"external high-gain antenna\" must not be altered without a new type approval. A unity-gain (no gain) antenna doesn't add power: it gets the signal out of the vehicle's metal body, so the same 0.5 W reaches further. An antenna with gain raises the radiated power past the 0.5 W e.r.p. limit, and that isn't allowed."],
-        ["Range", "Short: a few km in the open with the radio held out of the window or on an antenna outside, much less from inside the vehicle (see the range figures below)."],
+        ["Range", "Short: a few km in the open with an antenna outside the vehicle, much less from inside it (see below)."],
         ["Cost", "No licence fee."],
         ["Watch out", "Channels are shared and get no protection from interference. PMR446 is also licence-free in Europe and in some neighbouring countries, such as Botswana. The 464 MHz channels are licence-free in South Africa only."]
       ],

@@ -170,24 +170,12 @@
   }
 
   /* ---------------------------------------------------------- 3. inside vs outside */
-  const OUT = {
-    VHF: { label: "Club VHF", inside: ["vhfHand", "cab"], outside: ["vhfMobile", "roof"],
-      insideName: "Handheld inside the cab", outsideName: "Fitted radio, antenna on the roof", outTitle: "Antenna on the roof" },
-    UHF: { label: "Licence-free UHF", inside: ["pmr", "cab"], outside: ["pmr", "window"],
-      insideName: "Handheld inside the cab", outsideName: "Handheld held out of the window", outTitle: "Held out of the window" }
-  };
-  let outBand = "VHF";
+  /* Same radio, same power: only the antenna's place changes. Holding a radio out
+     of the window isn't part of this (owner, 2026-10-27): a fitted antenna, or a
+     unity-gain mag-mount on licence-free UHF, is the way to get the signal out. */
+  const OUT = { insideName: "Radio inside the cab", outsideName: "Antenna outside, on the roof", outTitle: "Antenna outside" };
   const OUT_G = 290, OUT_S = 1.35, OUT_L = 225, OUT_R = 675;
   const toScreen = (cx, [x, y]) => [cx + x * OUT_S, OUT_G + y * OUT_S];
-
-  function renderOutsideControls() {
-    $("#outside-band").innerHTML = chips("outside-band", [["VHF", "Club VHF"], ["UHF", "Licence-free UHF"]], outBand);
-    $("#outside-band").addEventListener("change", (e) => {
-      outBand = e.target.value;
-      updateOutsideText();
-      drawOutside(performance.now());
-    });
-  }
 
   function rings(tip, ms, opacity, n = 5) {
     let out = "";
@@ -212,7 +200,7 @@
   }
 
   function drawOutside(ms) {
-    const o = OUT[outBand];
+    const o = OUT;
     const L = OUT_L, R = OUT_R;
     // left: the handheld inside, low in the cab, below the window line
     const T = toScreen(L, [-40, -64]);
@@ -220,12 +208,9 @@
       <path d="M-40 -64 L-52 -90 L-82 -67 M-40 -64 L-22 -90 L4 -67 M-40 -64 L-98 -84 L-106 -66" class="bounce" marker-end="url(#arrow)"/>`;
     const cabin = polyD(CAR.cabin.map((p) => toScreen(L, p)));
     const cones = CAR.windows.map((w) => `<path d="${cone(T, w.map((p) => toScreen(L, p)))}"/>`).join("");
-    // right: a roof antenna (VHF), or the handheld held out of the window (UHF)
-    const rTipLocal = outBand === "VHF" ? [0, -160] : [18, -118];
-    const rTip = toScreen(R, rTipLocal);
-    const rExtra = outBand === "VHF"
-      ? `<line x1="0" y1="-101" x2="0" y2="-160" class="whip"/><rect x="-5" y="-103" width="10" height="4" rx="1" class="trim"/>`
-      : `<rect x="14" y="-106" width="8" height="15" rx="2" class="handheld"/><line x1="18" y1="-106" x2="18" y2="-118" class="stub"/>`;
+    // right: an antenna on the roof
+    const rTip = toScreen(R, [0, -160]);
+    const rExtra = `<line x1="0" y1="-101" x2="0" y2="-160" class="whip"/><rect x="-5" y="-103" width="10" height="4" rx="1" class="trim"/>`;
     const sc = (cx) => `translate(${cx} ${OUT_G}) scale(${OUT_S})`;
     $("#outside-svg").innerHTML = `
       <desc id="outside-desc">Left: ${esc(o.insideName.toLowerCase())}. The vehicle's metal body traps most of the signal and some escapes through the windows. Right: ${esc(o.outsideName.toLowerCase())}, with the signal spreading freely.</desc>
@@ -254,18 +239,15 @@
       <text x="${R}" y="${OUT_G + 76}" text-anchor="middle" class="onote">and higher up</text>`;
   }
 
+  // relative reach only: the same ratio holds for club VHF and licence-free UHF
   function updateOutsideText() {
-    const o = OUT[outBand];
-    const kIn = clearKm(...o.inside), kOut = clearKm(...o.outside);
-    const max = Math.max(kIn, kOut);
-    const bar = (km, cls) => `<span class="reach-bar ${cls}" style="width:${Math.max(4, (km / max) * 100).toFixed(1)}%"></span>`;
+    const ratio = clearKm("vhfHand", "roof") / clearKm("vhfHand", "cab");
+    const times = Math.round(ratio);
     $("#outside-reach").innerHTML = `
-      <div class="reach-row"><span class="reach-label">${esc(o.insideName)}</span>${bar(kIn, "reach-bar--in")}<span class="reach-km">about ${fmtKm(kIn)}</span></div>
-      <div class="reach-row"><span class="reach-label">${esc(o.outsideName)}</span>${bar(kOut, "reach-bar--out")}<span class="reach-km">about ${fmtKm(kOut)}</span></div>`;
-    const note = outBand === "VHF"
-      ? `Clear speech on open, flat ground, from the range model. Most of the difference is the metal body and the antenna's height, not the watts: the same 5 W handheld held out of the window can reach many kilometres, depending on the terrain and surroundings. The fitted radio's figure matches ORRA's 15-30 km.`
-      : `Clear speech on open, flat ground, from the range model. A licence-free radio stays at 0.5 W. Held out of the window, or on a small unity-gain (no gain) antenna outside the vehicle, its signal gets out of the metal body and reaches further. An antenna with gain isn't allowed.`;
-    $("#outside-note").innerHTML = esc(note) + refs(["physics", "p526", "orraVhf", "annexB2023", "ta2018", "vratvark"]);
+      <div class="reach-row"><span class="reach-label">${esc(OUT.insideName)}</span><span class="reach-bar reach-bar--in" style="width:${(100 / ratio).toFixed(1)}%"></span><span class="reach-km">1×</span></div>
+      <div class="reach-row"><span class="reach-label">${esc(OUT.outsideName)}</span><span class="reach-bar reach-bar--out" style="width:100%"></span><span class="reach-km">about ${times}×</span></div>`;
+    const note = `Same radio, same power, two vehicles on open, flat ground (range model): with the antenna outside, it reaches about ${times} times further, on club VHF and licence-free UHF alike. Most of the difference is the metal body and the antenna's height, not the watts. On club VHF that's a fitted radio with a roof antenna, about 15-30 km between vehicles (ORRA). On licence-free UHF, a small unity-gain (no gain) magnetic-mount antenna gets the signal out of the vehicle without adding power. An antenna with gain isn't allowed.`;
+    $("#outside-note").innerHTML = esc(note) + refs(["physics", "p526", "orraVhf", "annexB2023", "vratvark"]);
   }
 
   /* ---------------------------------------------------------- 4. antennas */
@@ -447,7 +429,7 @@
     const K = D.KINDS;
     // handheld: no fixed figure, its reach depends too much on terrain and where it's held (reviewer, 2026-10-27)
     const numbers = {
-      handheld: ["Range", "A club VHF handheld out of the window can reach many kilometres, depending on the terrain and surroundings, and much less from inside the cab. A licence-free UHF handheld reaches less."],
+      handheld: ["Range", "A club VHF handheld can reach many kilometres, depending on the terrain and surroundings, but much less from inside the cab. A licence-free UHF handheld reaches less."],
       mobile: ["Range model, open flat ground", `Club VHF fitted with a roof antenna: clear to about ${fmtKm(clearKm("vhfMobile", "roof"))}.`]
     };
     $("#kinds-list").innerHTML = ["handheld", "mobile"].map((k) => {
@@ -524,7 +506,6 @@
   renderBands();
   renderChooser();
   updateChooser();
-  renderOutsideControls();
   updateOutsideText();
   drawOutside(0);
   renderAntenna();
