@@ -237,12 +237,12 @@
     answer(a) {
       if (a.who === "near") {
         return a.kind === "handheld"
-          ? { band: "UHF", text: "Licence-free UHF handhelds. No paperwork; short range is all you need." }
-          : { band: "UHF", text: "Licence-free UHF handhelds. At short range a handheld does the job. Some models take a small unity-gain (no gain) magnetic-mount antenna to get the signal out of the vehicle; an antenna with gain isn't allowed." };
+          ? { band: "UHF", text: "Licence-free UHF handhelds. No paperwork, and short range is all you need." }
+          : { band: "UHF", text: "Licence-free UHF handhelds. At short range a handheld does the job. Some models take a small unity-gain (no gain) magnetic-mount antenna to get the signal out of the vehicle. An antenna with gain isn't allowed." };
       }
       const club = a.who === "club"
         ? "Ask the club which radio the convoy uses (usually VHF): every vehicle has to be on the same system. If the club uses licence-free UHF, see the UHF column. "
-        : "If your vehicles use licence-free UHF instead, see the UHF column; it reaches less. ";
+        : "If your vehicles use licence-free UHF instead, see the UHF column. It reaches less. ";
       return a.kind === "fitted"
         ? { band: "VHF", text: `${club}A club VHF mobile radio with a roof antenna, on a yearly licence through ORRA or 4x4Community.` }
         : { band: "VHF", text: `${club}A club VHF handheld, on a yearly licence through ORRA or 4x4Community. It reaches far less from inside a vehicle than a fitted radio (see below).` };
@@ -274,7 +274,7 @@
       rows: [
         ["What", "Club radios in the 146-174 MHz band, on channels licensed to an issuer such as ORRA, which licenses off-road clubs across South Africa, or 4x4Community."],
         ["Licence", "A yearly authorisation through ORRA (via a recognised club) or 4x4Community (about R225 a year). Valid in South Africa only."],
-        ["Power", "Handhelds about 5 W (a common approved rating); fitted radios up to 30 W (ORRA)."],
+        ["Power", "Handhelds about 5 W (a common approved rating). Fitted radios up to 30 W (ORRA)."],
         ["Antenna", "A fitted radio uses a roof or pillar antenna, tuned for your channels."],
         ["Range", "About 15-30 km between fitted radios, depending on the terrain (ORRA)."],
         ["Cost", "The licence, the radio and fitting."],
@@ -292,9 +292,9 @@
       ["Gain toward the horizon (vs a quarter-wave)", "0 dB (unity)", "3 dB on Webb's spec sheet (2 dB on its overview page)"],
       ["Bandwidth (SWR 1.5:1 or better)", "0.5 to 9 MHz", "3 MHz"],
       ["Whip length (Webb's cutting chart)", "about 500 mm at 150 MHz, 480 mm at 160 MHz", "about 1,350 mm at 150 MHz, 1,250 mm at 160 MHz"],
-      ["ORRA's channels", "Tuned midway between ORRA's channel groups, covers them all (its bandwidth is about their spread)", "Tuned for channels 1-4 (regular member communication); not right for channels 5-7"],
+      ["ORRA's channels", "Tuned midway between ORRA's channel groups, covers them all (its bandwidth is about their spread)", "Tuned for channels 1-4 (regular member communication), not right for channels 5-7"],
       ["Strongest", "Spread evenly: low and higher angles", "Toward the horizon"],
-      ["Suits", "All your channels; hills and mountains", "Channels close together; flat, open country"]
+      ["Suits", "All your channels, hills and mountains", "Channels close together, flat open country"]
     ],
     /* Tuning: ORRA's FAQ says its first 6 channels are its 3 frequencies with 2
        tone sets, originally around 150 and 160 MHz with a third added in the
@@ -308,9 +308,9 @@
       len130: { low: 1350, high: 1250 }, // Webb cutting chart, ~150 / ~160 MHz (mm)
       len60: { low: 500, high: 480 },
       text: [
-        "Every antenna is tuned for a band of frequencies: cut to length (Webb's chart; cut about 25 mm long first), then adjusted for the lowest SWR with proper test equipment.",
+        "Every antenna is tuned for a band of frequencies: cut to length (Webb's chart, cut about 25 mm long first), then adjusted for the lowest SWR with proper test equipment.",
         "ORRA's channels sit in two groups: channels 1-4 close together, and channels 5-7 several MHz lower (about 8.5 MHz on 4x4Community's published programming).",
-        "A ZARA60's bandwidth is up to 9 MHz, about the spread of ORRA's channels, so tuned midway between the groups it covers them all; that's why ORRA prefers the quarter-wave. A ZARA130 covers 3 MHz: tuned for channels 1-4, it isn't right for channels 5-7. Its whip for channel 5 would be about 10 cm longer than for channel 1; the ZARA60's only about 2 cm."
+        "A ZARA60's bandwidth is up to 9 MHz, about the spread of ORRA's channels, so tuned midway between the groups it covers them all. That's why ORRA prefers the quarter-wave. A ZARA130 covers 3 MHz: tuned for channels 1-4, it isn't right for channels 5-7. Its whip for channel 5 would be about 10 cm longer than for channel 1, the ZARA60's only about 2 cm."
       ],
       sources: ["webb60spec", "webb130spec", "webbInstall", "orraFaq", "orraChannels", "x4cChannels", "orraVhf", "orraAntenna"]
     },
@@ -321,7 +321,7 @@
       { id: "switchback", deg: 35, label: "Switchback", where: "The other vehicle is on the bend just above you on a zig-zag pass, about 35° up." }
     ],
     points: [
-      "Gain isn't power. Both antennas get the same power from the radio; a 5/8 squeezes it into a flatter shape, so it sends more toward the horizon and less upward.",
+      "Gain isn't power. Both antennas get the same power from the radio. A 5/8 squeezes it into a flatter shape, so it sends more toward the horizon and less upward.",
       "So the ZARA60 has less gain, yet in the mountains it often does better: the other vehicle is above or below you, outside the 5/8's flat beam. From about 18° to 60° up the quarter-wave is stronger, and at about 37° the 5/8 is almost deaf. Below 18°, which includes most vehicles a few km away, the 5/8 is stronger.",
       "ORRA prefers the quarter-wave because its channels are spread wide, and calls it \"a good choice in hilly terrain\".",
       "Size isn't range: an antenna's length is set by its frequency and design (Webb's chart: a ZARA60 whip is about 500 mm at 150 MHz, a ZARA130's about 1,350 mm). Height and a clear path give range."
@@ -335,7 +335,7 @@
       title: "Handheld",
       pros: [
         "Goes with you out of the vehicle: spotting, guiding a driver over an obstacle, around camp.",
-        "Runs on its own battery; nothing to fit.",
+        "Runs on its own battery, with nothing to fit.",
         "A club VHF handheld uses the same licence as your fitted radio (4x4Community: one licence covers both)."
       ],
       cons: [
@@ -350,11 +350,11 @@
       pros: [
         "Up to 30 W on club VHF, through an antenna outside the metal body.",
         "About 15-30 km between vehicles, depending on the terrain.",
-        "Powered by the vehicle; always on and ready in the convoy."
+        "Powered by the vehicle, always on and ready in the convoy."
       ],
       cons: [
         "Needs a licence (club VHF) and fitting.",
-        "The antenna must be mounted well and tuned with proper test equipment by someone skilled; on VHF a poor installation can damage the radio or hurt people (ORRA).",
+        "The antenna must be mounted well and tuned with proper test equipment by someone skilled. On VHF a poor installation can damage the radio or hurt people (ORRA).",
         "Stays in the vehicle."
       ],
       sources: ["orraVhf", "orraAntenna"]
@@ -412,7 +412,7 @@
       text: "Every commercial radio used in South Africa must be type-approved, and so must licence-free ones. Owning radio apparatus without a licence, an exemption or type approval can carry 6 to 24 months in jail and/or a fine of R250,000 to R5 million (regulations 38(1) and 42(6)).",
       sources: ["rfsr2015", "annexB2023"] },
     { title: "Licence-free radios pushed past the rules",
-      text: "More than 0.5 W radiated, changed frequencies or power, or an external UHF antenna with gain. ICASA says these must not be altered without a new type approval. The small magnetic-mount antennas sold as an accessory for some models should be unity gain (no gain): they get the signal out of the vehicle without adding power. The moment the radio is connected to an antenna with gain, its radiated power goes past the 0.5 W limit and it's no longer legal. A radio that can do 5 W on UHF is only licence-free when it runs at 0.5 W on the licence-free channels; anything more needs a licence.",
+      text: "More than 0.5 W radiated, changed frequencies or power, or an external UHF antenna with gain. ICASA says these must not be altered without a new type approval. The small magnetic-mount antennas sold as an accessory for some models should be unity gain (no gain): they get the signal out of the vehicle without adding power. The moment the radio is connected to an antenna with gain, its radiated power goes past the 0.5 W limit and it's no longer legal. A radio that can do 5 W on UHF is only licence-free when it runs at 0.5 W on the licence-free channels. Anything more needs a licence.",
       sources: ["annexB2023", "vratvark"] },
     { title: "Any radio on channels you aren't licensed for",
       text: "Using club VHF channels without an authorisation is transmitting without a licence. A licensed user may only use the frequencies they were given.",
@@ -426,7 +426,7 @@
       "Look for the ICASA label with the approval number, like the one in this Vratvark 2.0 (inside the battery compartment).",
       "The aim is that only type-approved equipment is sold, leased or used in South Africa.",
       "It applies to the model as approved. Changing a licence-free radio's frequencies or power, or giving it an external high-gain antenna, needs a new type approval.",
-      "Type approval isn't a licence. It means the radio may be used; you still need a licence unless it's a licence-free radio used as approved.",
+      "Type approval isn't a licence. It means the radio may be used, but you still need a licence unless it's a licence-free radio used as approved.",
       "ICASA can suspend an approval: the Baofeng UV-5R was approved in 2018 (TA-2018/870, 4 W, VHF and UHF) and banned in 2022 for commercial use."
     ],
     sources: ["taGuidelines", "ta2018", "annexB2023", "baofeng2022", "photos"]

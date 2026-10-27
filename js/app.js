@@ -228,7 +228,7 @@
       : `<rect x="14" y="-106" width="8" height="15" rx="2" class="handheld"/><line x1="18" y1="-106" x2="18" y2="-118" class="stub"/>`;
     const sc = (cx) => `translate(${cx} ${OUT_G}) scale(${OUT_S})`;
     $("#outside-svg").innerHTML = `
-      <desc id="outside-desc">Left: ${esc(o.insideName.toLowerCase())}; the vehicle's metal body traps most of the signal and some escapes through the windows. Right: ${esc(o.outsideName.toLowerCase())}, with the signal spreading freely.</desc>
+      <desc id="outside-desc">Left: ${esc(o.insideName.toLowerCase())}. The vehicle's metal body traps most of the signal and some escapes through the windows. Right: ${esc(o.outsideName.toLowerCase())}, with the signal spreading freely.</desc>
       <defs>
         <linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071033"/><stop offset="1" stop-color="#0c1a45"/></linearGradient>
         <clipPath id="oclipCabin"><path d="${cabin}"/></clipPath>
@@ -264,7 +264,7 @@
       <div class="reach-row"><span class="reach-label">${esc(o.outsideName)}</span>${bar(kOut, "reach-bar--out")}<span class="reach-km">about ${fmtKm(kOut)}</span></div>`;
     const note = outBand === "VHF"
       ? `Clear speech on open, flat ground, from the range model. Most of the difference is the metal body and the antenna's height, not the watts: the same 5 W handheld held out of the window can reach many kilometres, depending on the terrain and surroundings. The fitted radio's figure matches ORRA's 15-30 km.`
-      : `Clear speech on open, flat ground, from the range model. A licence-free radio stays at 0.5 W. Held out of the window, or on a small unity-gain (no gain) antenna outside the vehicle, its signal gets out of the metal body and reaches further; an antenna with gain isn't allowed.`;
+      : `Clear speech on open, flat ground, from the range model. A licence-free radio stays at 0.5 W. Held out of the window, or on a small unity-gain (no gain) antenna outside the vehicle, its signal gets out of the metal body and reaches further. An antenna with gain isn't allowed.`;
     $("#outside-note").innerHTML = esc(note) + refs(["physics", "p526", "orraVhf", "annexB2023", "ta2018", "vratvark"]);
   }
 
@@ -344,7 +344,7 @@
     };
     const ok60lo = x0 >= mid60 - w60 / 2 - 8, ok130lo = x0 >= mid130 - w130 / 2;
     $("#tuning-svg").innerHTML = `
-      <desc>ORRA's channels in two groups about ${t.groupGapMHz} MHz apart. A ZARA60's 9 MHz bandwidth spans both groups; a ZARA130's 3 MHz bandwidth covers only channels 1-4.</desc>
+      <desc>ORRA's channels in two groups about ${t.groupGapMHz} MHz apart. A ZARA60's 9 MHz bandwidth spans both groups. A ZARA130's 3 MHz bandwidth covers only channels 1-4.</desc>
       <line x1="${x0}" y1="40" x2="${x0}" y2="190" class="chan"/>
       <line x1="${xHi}" y1="40" x2="${xHi}" y2="190" class="chan"/>
       <line x1="${xHi2}" y1="40" x2="${xHi2}" y2="190" class="chan"/>
@@ -411,7 +411,7 @@
       return `<line x1="${ox}" y1="${oy}" x2="${x2}" y2="${y2}" class="sector-edge"/><text x="${tx}" y="${ty}" dx="8" class="sector-deg">${Math.round(deg)}°</text>`;
     };
     $("#bubble").innerHTML = `
-      <desc id="bubble-desc">${esc(sc.where)} Gain pattern, drawn to scale in received signal. Both antennas get the same power from the radio. The quarter-wave's pattern is rounder; the 5/8's is flatter and twice as long toward the horizon. The ZARA130 is stronger from the horizon to ${Math.round(LO)}° up, the ZARA60 from ${Math.round(LO)}° to ${Math.round(HI)}° up. Toward the other vehicle: ${ratio}.</desc>
+      <desc id="bubble-desc">${esc(sc.where)} Gain pattern, drawn to scale in received signal. Both antennas get the same power from the radio. The quarter-wave's pattern is rounder, the 5/8's is flatter and twice as long toward the horizon. The ZARA130 is stronger from the horizon to ${Math.round(LO)}° up, the ZARA60 from ${Math.round(LO)}° to ${Math.round(HI)}° up. Toward the other vehicle: ${ratio}.</desc>
       <defs><linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071033"/><stop offset="1" stop-color="#0c1a45"/></linearGradient></defs>
       <rect width="900" height="400" fill="url(#bsky)"/>
       ${sector(0, LO, "sector sector--f")}
@@ -447,7 +447,7 @@
     const K = D.KINDS;
     // handheld: no fixed figure, its reach depends too much on terrain and where it's held (reviewer, 2026-10-27)
     const numbers = {
-      handheld: ["Range", "A club VHF handheld out of the window can reach many kilometres, depending on the terrain and surroundings; much less from inside the cab. A licence-free UHF handheld reaches less."],
+      handheld: ["Range", "A club VHF handheld out of the window can reach many kilometres, depending on the terrain and surroundings, and much less from inside the cab. A licence-free UHF handheld reaches less."],
       mobile: ["Range model, open flat ground", `Club VHF fitted with a roof antenna: clear to about ${fmtKm(clearKm("vhfMobile", "roof"))}.`]
     };
     $("#kinds-list").innerHTML = ["handheld", "mobile"].map((k) => {
