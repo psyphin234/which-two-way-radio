@@ -46,6 +46,11 @@
       by: "CEPT ECC", kind: "regulator",
       url: "https://docdb.cept.org/document/448"
     },
+    ta2025: {
+      title: "List of Type Approved Equipment, 2025 (BF-888S: TA-2022/1494, TA-2023/1092, TA-2024/1336)",
+      by: "ICASA", kind: "regulator",
+      url: "https://www.icasa.org.za/uploads/files/List-of-Type-Approved-Equipment-2025.pdf"
+    },
     bocraSrd: {
       title: "Guidelines on the Use of Short-Range Devices (SRDs) in Botswana, February 2022",
       by: "BOCRA", kind: "regulator",
@@ -442,9 +447,9 @@
       { n: 3, x: 0.67, name: "Vratvark 2.0 (RTS DV-3140UV)", verdict: "Legal with a club VHF licence", tone: "pass",
         text: "A VHF and UHF FM radio with ICASA type approval TA-2014/1255 (the label is shown below). It has no keypad for typing in frequencies: an accredited dealer programs its channels. With a club VHF licence and your issuer's channels programmed in, it's legal to use.",
         sources: ["photos", "baofeng2022"] },
-      { n: 4, x: 0.89, name: "Baofeng 888S (V6)", verdict: "Can be programmed to the licence-free UHF rules, but isn't type-approved", tone: "warn",
-        text: "A UHF-only radio (400-470 MHz, 16 channels). Club VHF is 146-174 MHz, so it can't talk to a VHF convoy, and a VHF licence doesn't cover it. It has a high and a low power setting, and the channels and power are set in the programming software, not by the user. So a dealer can program it to tick the licence-free boxes: the licence-free UHF channels at low power, within the 0.5 W e.r.p. limit. What it lacks is ICASA type approval, and every licence-free radio must be type-approved. MyBroadband tested a BF-888S at about 2-3 W, so it has to be set to low power first. Baofeng sells a separate PMR446 model, the BF-88E (rated ≤0.5 W), for licence-free use in Europe.",
-        sources: ["mybroadband", "baofeng88E", "annexB2023"] }
+      { n: 4, x: 0.89, name: "Baofeng 888S (V6)", verdict: "Type-approved. Legal licence-free when a dealer sets it to the licence-free channels on low power", tone: "pass",
+        text: "A UHF-only radio (400-470 MHz, 16 channels). Club VHF is 146-174 MHz, so it can't talk to a VHF convoy, and a VHF licence doesn't cover it. It has a high and a low power setting, and the channels and power are set in the programming software, not by the user. So a dealer can set it up for licence-free use: the licence-free UHF channels at low power, within the 0.5 W e.r.p. limit. MyBroadband tested a BF-888S at about 2-3 W, so it has to be set to low power first. ICASA's 2025 type-approval list has the BF-888S under three approval numbers (TA-2022/1494, TA-2023/1092 and TA-2024/1336). The list doesn't say which frequencies or power each covers, so look for the ICASA label, or ask the dealer for the approval number. Baofeng sells a separate PMR446 model, the BF-88E (rated ≤0.5 W), for licence-free use in Europe.",
+        sources: ["ta2025", "mybroadband", "baofeng88E", "annexB2023"] }
     ]
   };
 
