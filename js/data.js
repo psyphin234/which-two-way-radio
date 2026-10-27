@@ -151,6 +151,16 @@
       by: "Baofeng", kind: "maker",
       url: "https://www.baofengradio.com/blogs/news/review-of-the-dm-32uv-uv-32"
     },
+    baofeng888De: {
+      title: "Baofeng BF-888S (product page, Baofeng Germany): \"RF power: 3W/1W\", 400-470 MHz",
+      by: "Baofeng", kind: "maker",
+      url: "https://baofengradio.de/en/radios/baofeng-bf-888s.html"
+    },
+    baofeng88E: {
+      title: "BF-88E PMR446 16CH license free radio (product page): \"RF Rated Power: ≦0.5W\"",
+      by: "Baofeng", kind: "maker",
+      url: "https://www.baofengradio.com/products/bf-88e-pmr446-16ch-license-free-radio"
+    },
     uv16: {
       title: "Baofeng UV-16 (catalogue listing)",
       by: "e-catalog", kind: "catalogue",
@@ -231,8 +241,8 @@
           : { band: "UHF", text: "Licence-free UHF handhelds. At short range a handheld does the job. Some models take a small unity-gain (no gain) magnetic-mount antenna to get the signal out of the vehicle; an antenna with gain isn't allowed." };
       }
       const club = a.who === "club"
-        ? "Ask the club which radio the convoy uses (usually VHF): every vehicle has to be on the same system. "
-        : "";
+        ? "Ask the club which radio the convoy uses (usually VHF): every vehicle has to be on the same system. If the club uses licence-free UHF, see the UHF column. "
+        : "If your vehicles use licence-free UHF instead, see the UHF column; it reaches less. ";
       return a.kind === "fitted"
         ? { band: "VHF", text: `${club}A club VHF mobile radio with a roof antenna, on a yearly licence through ORRA or 4x4Community.` }
         : { band: "VHF", text: `${club}A club VHF handheld, on a yearly licence through ORRA or 4x4Community. It reaches far less from inside a vehicle than a fitted radio (see below).` };
@@ -438,8 +448,8 @@
         text: "A VHF and UHF FM radio with ICASA type approval TA-2014/1255 (the label is shown below). It has no keypad for typing in frequencies: an accredited dealer programs its channels. With a club VHF licence and your issuer's channels programmed in, it's legal to use.",
         sources: ["photos", "baofeng2022"] },
       { n: 4, x: 0.89, name: "Baofeng 888S (V6)", verdict: "UHF only: won't work with club VHF, and isn't licence-free", tone: "fail",
-        text: "A UHF-only radio (400-470 MHz, 16 channels). Club VHF is 146-174 MHz, so it can't talk to a VHF convoy, and a VHF licence doesn't cover it. Programmed to the licence-free UHF channels, it still isn't legal: licence-free radios are limited to 0.5 W e.r.p., must be type-approved for licence-free use, and may not be altered. MyBroadband tested a BF-888S at about 2-3 W, four to six times the limit. A BF-88S/BF-888 appears on ICASA's 2018 type-approval list, but type approval isn't a licence, so at that power it would need one.",
-        sources: ["mybroadband", "annexB2023", "ta2018"] }
+        text: "A UHF-only radio (400-470 MHz, 16 channels). Club VHF is 146-174 MHz, so it can't talk to a VHF convoy, and a VHF licence doesn't cover it. Programmed to the licence-free UHF channels, it still isn't legal: licence-free radios are limited to 0.5 W e.r.p., must be type-approved for licence-free use, and may not be altered. MyBroadband tested a BF-888S at about 2-3 W, four to six times the limit. Even its low setting is listed at 1 W (Baofeng's German site), twice the limit. A BF-88S/BF-888 appears on ICASA's 2018 type-approval list, but type approval isn't a licence, so at that power it would need one. Baofeng sells a separate PMR446 model, the BF-88E (rated ≤0.5 W), for licence-free use in Europe.",
+        sources: ["mybroadband", "baofeng888De", "baofeng88E", "annexB2023", "ta2018"] }
     ]
   };
 
